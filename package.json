@@ -9,17 +9,17 @@
     "stripe:listen": "stripe listen --forward-to=localhost:3000/api/webhooks --project-name=saas-starter"
   },
   "dependencies": {
-    "@stripe/stripe-js": "1.22.0",
-    "@supabase/auth-helpers-nextjs": "^0.4.1",
-    "@supabase/auth-helpers-react": "^0.3.0",
+    "@stripe/stripe-js": "^1.45.0",
+    "@supabase/auth-helpers-nextjs": "^0.5.2",
+    "@supabase/auth-helpers-react": "^0.3.1",
     "@supabase/auth-ui-react": "^0.2.6",
-    "@supabase/supabase-js": "^2.0.0",
+    "@supabase/supabase-js": "^2.1.1",
     "classnames": "2.3.1",
     "next": "^12.2.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-merge-refs": "1.1.0",
-    "stripe": "8.201.0",
+    "stripe": "^11.1.0",
     "swr": "1.2.0",
     "tailwindcss": "3.0.18"
   },
