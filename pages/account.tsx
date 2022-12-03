@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { useState, ReactNode } from 'react';
 
-import LoadingDots from 'components/ui/LoadingDots';
-import Button from 'components/ui/Button';
 import { useUser } from 'utils/useUser';
 import { postData } from 'utils/helpers';
 
 import { User } from '@supabase/supabase-js';
 import { withPageAuth } from '@supabase/auth-helpers-nextjs';
+
+import {Box,Text, Button}  from '@chakra-ui/react';
+import Spinner from '@/components/ui/Spinner';
 
 interface Props {
   title: string;
@@ -18,16 +19,13 @@ interface Props {
 
 function Card({ title, description, footer, children }: Props) {
   return (
-    <div className="border border-zinc-700	max-w-3xl w-full p rounded-md m-auto my-8">
-      <div className="px-5 py-4">
-        <h3 className="text-2xl mb-1 font-medium">{title}</h3>
-        <p className="text-zinc-300">{description}</p>
-        {children}
-      </div>
-      <div className="border-t border-zinc-700 bg-zinc-900 p-4 text-zinc-500 rounded-b-md">
-        {footer}
-      </div>
-    </div>
+    <Box color='white' display="flex" flexDirection='column' w='100%'  borderWidth='1px' borderRadius='lg' overflow='hidden'>
+      <Text fontSize={'md'}>{title}</Text >
+      <Text fontSize={'sm'}>{description}</Text>
+      {children}
+      <Box borderTop="1px" bgColor="pink"  w='100%'>  {footer}</Box>
+    </Box>
+    
   );
 }
 
@@ -59,19 +57,9 @@ export default function Account({ user }: { user: User }) {
     }).format((subscription?.prices?.unit_amount || 0) / 100);
 
   return (
-    <section className="bg-black mb-32">
-      <div className="max-w-6xl mx-auto pt-8 sm:pt-24 pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:flex-col sm:align-center">
-          <h1 className="text-4xl font-extrabold text-white sm:text-center sm:text-6xl">
-            Account
-          </h1>
-          <p className="mt-5 text-xl text-zinc-200 sm:text-center sm:text-2xl max-w-2xl m-auto">
-            We partnered with Stripe for a simplified billing.
-          </p>
-        </div>
-      </div>
-      <div className="p-4">
-        <Card
+    <Box w="100%" paddingX={['2%','10%','25%']}>
+      <Text mb="3rem" fontSize="3rem" fontWeight="bold" color="white">account</Text>
+      <Card
           title="Your Plan"
           description={
             subscription
@@ -85,7 +73,7 @@ export default function Account({ user }: { user: User }) {
               </p>
               <Button
                 variant="slim"
-                loading={loading}
+                isLoading ={loading}
                 disabled={loading || !subscription}
                 onClick={redirectToCustomerPortal}
               >
@@ -97,7 +85,7 @@ export default function Account({ user }: { user: User }) {
           <div className="text-xl mt-8 mb-4 font-semibold">
             {isLoading ? (
               <div className="h-12 mb-6">
-                <LoadingDots />
+                <Spinner />
               </div>
             ) : subscription ? (
               `${subscriptionPrice}/${subscription?.prices?.interval}`
@@ -121,7 +109,7 @@ export default function Account({ user }: { user: User }) {
               }`
             ) : (
               <div className="h-8 mb-6">
-                <LoadingDots />
+                <Spinner />
               </div>
             )}
           </div>
@@ -135,7 +123,6 @@ export default function Account({ user }: { user: User }) {
             {user ? user.email : undefined}
           </p>
         </Card>
-      </div>
-    </section>
+    </Box>
   );
 }

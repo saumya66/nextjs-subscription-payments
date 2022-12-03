@@ -7,6 +7,8 @@ import { postData } from 'utils/helpers';
 import { getStripe } from 'utils/stripe-client';
 import { useUser } from 'utils/useUser';
 import { Price, ProductWithPrice } from 'types';
+import { getActiveProductsWithPrices } from '@/utils/supabase-client';
+import { GetStaticPropsResult } from 'next';
 
 interface Props {
   products: ProductWithPrice[];
@@ -14,7 +16,7 @@ interface Props {
 
 type BillingInterval = 'year' | 'month';
 
-export default function Pricing({ products }: Props) {
+export default function Pricing({ products }: Props ) {
   const router = useRouter();
   const [billingInterval, setBillingInterval] =
     useState<BillingInterval>('month');
@@ -210,4 +212,17 @@ export default function Pricing({ products }: Props) {
       </div>
     </section>
   );
+}
+
+
+
+export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
+  const products = await getActiveProductsWithPrices();
+
+  return {
+    props: {
+      products
+    },
+    revalidate: 60
+  };
 }

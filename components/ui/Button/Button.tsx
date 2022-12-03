@@ -3,7 +3,7 @@ import React, { forwardRef, useRef, ButtonHTMLAttributes } from 'react';
 import mergeRefs from 'react-merge-refs';
 import styles from './Button.module.css';
 
-import LoadingDots from 'components/ui/LoadingDots';
+import LoadingDots from '@/components/ui/Spinner';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'slim' | 'flat';

@@ -9,6 +9,7 @@ import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { AppProps } from 'next/app';
 import { MyUserContextProvider } from 'utils/useUser';
 import type { Database } from 'types_db';
+import { ChakraProvider } from '@chakra-ui/react';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const [supabaseClient] = useState(() =>
@@ -19,6 +20,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
+    <ChakraProvider>
     <div className="bg-black">
       <SessionContextProvider supabaseClient={supabaseClient}>
         <MyUserContextProvider>
@@ -28,5 +30,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         </MyUserContextProvider>
       </SessionContextProvider>
     </div>
+    </ChakraProvider>
   );
 }
