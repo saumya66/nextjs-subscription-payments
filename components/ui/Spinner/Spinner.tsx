@@ -1,16 +1,16 @@
-import { SpinnerIcon } from '@chakra-ui/icons';
+import { Spinner } from '@chakra-ui/icons';
 import s from './LoadingDots.module.css';
 
-const Spinner = () => {
+const SpinnerIcon = () => {
   return (
-    <SpinnerIcon
+    <Spinner
       thickness='4px'
       speed='0.65s'
       emptyColor='gray.200'
-      color='blue.500'
+      color='green.500'
       size='xl'
     />
   );
 };
 
-export default Spinner;
+export default SpinnerIcon;
