@@ -1,5 +1,4 @@
 import { Spinner } from '@chakra-ui/react';
-import s from './LoadingDots.module.css';
 
 const SpinnerIcon = () => {
   return (
