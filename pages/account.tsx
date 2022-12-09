@@ -7,7 +7,7 @@ import { postData } from 'utils/helpers';
 import { User } from '@supabase/supabase-js';
 import { withPageAuth } from '@supabase/auth-helpers-nextjs';
 
-import {Box,Text, Button}  from '@chakra-ui/react';
+import {Box,Text, Button, Stack, Flex}  from '@chakra-ui/react';
 import Spinner from '@/components/ui/Spinner';
 
 interface Props {
@@ -19,11 +19,20 @@ interface Props {
 
 function Card({ title, description, footer, children }: Props) {
   return (
-    <Box color='white' display="flex" flexDirection='column' w='100%'  borderWidth='1px' borderRadius='lg' overflow='hidden'>
-      <Text fontSize={'md'}>{title}</Text >
+    <Box color='black' 
+      display="flex" 
+      flexDirection='column' 
+      w='100%'  
+      borderWidth='1px' 
+      borderRadius='lg' 
+      overflow='hidden' 
+      shadow="2xl" 
+      mb={4}
+      p={4}>
+      <Text fontWeight="bold" fontSize={'lg'}>{title}</Text >
       <Text fontSize={'sm'}>{description}</Text>
       {children}
-      <Box borderTop="1px" bgColor="pink"  w='100%'>  {footer}</Box>
+      {footer && <Box borderTop="1px" w='100%' borderColor='gray.300' p={2} mt={2}>  {footer}</Box>}
     </Box>
     
   );
@@ -45,7 +54,7 @@ export default function Account({ user }: { user: User }) {
     } catch (error) {
       if (error) return alert((error as Error).message);
     }
-    setLoading(false);
+    finally{setLoading(false);}
   };
 
   const subscriptionPrice =
@@ -55,7 +64,6 @@ export default function Account({ user }: { user: User }) {
       currency: subscription?.prices?.currency,
       minimumFractionDigits: 0
     }).format((subscription?.prices?.unit_amount || 0) / 100);
-
   return (
     <Box w="100%" paddingX={['2%','10%','25%']}>
       <Text mb="3rem" fontSize="3rem" fontWeight="bold" color="white">account</Text>
@@ -67,19 +75,26 @@ export default function Account({ user }: { user: User }) {
               : ''
           }
           footer={
-            <div className="flex items-start justify-between flex-col sm:flex-row sm:items-center">
-              <p className="pb-4 sm:pb-0">
+            <Flex direction={'row'} justify="space-between" align="center">
+              <div>
                 Manage your subscription on Stripe.
-              </p>
+              </div>
               <Button
-                variant="slim"
                 isLoading ={loading}
                 disabled={loading || !subscription}
                 onClick={redirectToCustomerPortal}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                color={'white'}
+                bg={'green.500'}
+                _hover={{
+                  bg: 'green.300',
+                }}
               >
                 Open customer portal
               </Button>
-            </div>
+            </Flex>
           }
         >
           <div className="text-xl mt-8 mb-4 font-semibold">
@@ -97,27 +112,9 @@ export default function Account({ user }: { user: User }) {
           </div>
         </Card>
         <Card
-          title="Your Name"
-          description="Please enter your full name, or a display name you are comfortable with."
-          footer={<p>Please use 64 characters at maximum.</p>}
-        >
-          <div className="text-xl mt-8 mb-4 font-semibold">
-            {userDetails ? (
-              `${
-                userDetails.full_name ??
-                `${userDetails.first_name} ${userDetails.last_name}`
-              }`
-            ) : (
-              <div className="h-8 mb-6">
-                <Spinner />
-              </div>
-            )}
-          </div>
-        </Card>
-        <Card
           title="Your Email"
-          description="Please enter the email address you want to use to login."
-          footer={<p>We will email you to verify the change.</p>}
+          description=""
+          // footer={}
         >
           <p className="text-xl mt-8 mb-4 font-semibold">
             {user ? user.email : undefined}

@@ -107,15 +107,15 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={'white'}
             bg={'green.500'}
+            _hover={{
+              bg: 'green.300',
+            }}
             onClick ={
               user ? async () => {
                 await supabaseClient.auth.signOut();
                 router.push('/signin');
               } :  ()=>router.push('/signin')
-            } 
-            _hover={{
-              bg: 'green.300',
-            }}>
+            }>
               {user ? 'sign out':'sign in'}
           </Button>
         </Stack>
