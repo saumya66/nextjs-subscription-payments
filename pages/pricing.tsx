@@ -130,9 +130,7 @@ export default function Pricing({ products }: Props ) {
                     {product.name}
                     </Text>
                     <HStack justifyContent="center">
-                      <Text fontSize="3xl" fontWeight="600">
-                        $
-                      </Text>
+                    
                       <Text fontSize="5xl" fontWeight="900">
                       {priceString}
                       </Text>
